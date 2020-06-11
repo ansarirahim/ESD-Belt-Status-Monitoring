@@ -17,41 +17,41 @@
 //------------------------------------------------------------------------------------
 // Defining I/O Pins
 //------------------------------------------------------------------------------------
-#define       LED0      2         // WIFI Module LED
-#define       LED1      D0        // Connectivity With Client #1
-#define       LED2      D2        // Connectivity With Client #2
-#define       BUTTON    D1        // Connectivity ReInitiate Button
-#define       TWI_FREQ  400000L   // I2C Frequency Setting To 400KHZ
+#define LED0 2           // WIFI Module LED
+#define LED1 D0          // Connectivity With Client #1
+#define LED2 D2          // Connectivity With Client #2
+#define BUTTON D1        // Connectivity ReInitiate Button
+#define TWI_FREQ 400000L // I2C Frequency Setting To 400KHZ
 #define DHTPIN D7
 
-#define DHTTYPE DHT11   // DHT 11
+#define DHTTYPE DHT11 // DHT 11
 ///DHT dht(DHTPIN, DHTTYPE);
 //------------------------------------------------------------------------------------
 // BUTTON Variables
 //------------------------------------------------------------------------------------
-int           ButtonState;
-int           LastButtonState   = LOW;
-int           LastDebounceTime  = 0;
-int           DebounceDelay     = 50;
-const String  ButtonColor       = "BLU";
-float temperature ;
-float humidity ;
+int ButtonState;
+int LastButtonState = LOW;
+int LastDebounceTime = 0;
+int DebounceDelay = 50;
+const String ButtonColor = "BLU";
+float temperature;
+float humidity;
 String t, h;
 //------------------------------------------------------------------------------------
 // LED Delay Variables
 //------------------------------------------------------------------------------------
-int           LEDState          = LOW;
-unsigned long CurrMillis        = 0;
-unsigned long PrevMillis        = 0;
-unsigned long Interval          = 1000;
+int LEDState = LOW;
+unsigned long CurrMillis = 0;
+unsigned long PrevMillis = 0;
+unsigned long Interval = 1000;
 //------------------------------------------------------------------------------------
 // Authentication Variables
 //------------------------------------------------------------------------------------
-char*         TKDssid;
+char *TKDssid;
 float RmsValueStringToFloat;
-char*         TKDpassword;
-IPAddress     TKDServer(192, 168, 4, 1);
-WiFiClient    TKDClient;
+char *TKDpassword;
+IPAddress TKDServer(192, 168, 4, 1);
+WiFiClient TKDClient;
 
 #define NOOFSAMPLES 1000
 #define VS 5000UL
@@ -68,8 +68,8 @@ int StaionStatus = 0;
 #define LUNCH_MODE 6
 ///#define LED_BLUE D6
 
-#define BLUELED D0            // Led in NodeMCU at pin GPIO16 (D0).
-#define LED_BLUE BLUELED  ///D6
+#define BLUELED D0       // Led in NodeMCU at pin GPIO16 (D0).
+#define LED_BLUE BLUELED ///D6
 #define REDLED D1
 #define GREENLED D2
 #define BUTTON_BYPASSMODE D3
@@ -77,14 +77,14 @@ int StaionStatus = 0;
 #define BUTTON_LUNCHMODE D6
 #define BUTTON_RESET_5MINT D5
 #define LED_ESD_RESETMODE BLUELED //D6
- 
+
 #define LED_ESD_NORMAL GREENLED ///D7
-#define LED_ESD_FAULTY REDLED ///D8
+#define LED_ESD_FAULTY REDLED   ///D8
 double calibs = 5.0;
-const int analogInPin = A0;  // ESP8266 Analog Pin ADC0 = A0
+const int analogInPin = A0; // ESP8266 Analog Pin ADC0 = A0
 
 ///int sensorValue = 0;  // value read from the pot
-int outputValue = 0;  // value to output to a PWM pin
+int outputValue = 0; // value to output to a PWM pin
 
 String ReadSwitches = "";
 double sensorValues[NOOFSAMPLES];
@@ -99,12 +99,13 @@ int fiveminutescounter = 0;
 
 #define RESET_TIMEOUT 400
 bool Stopthecount = false;
-bool Stopmilisec=false;
+bool Stopmilisec = false;
 
-#define BROADCAST_DELAY 1000  ///1000
- String stationinf = "";
+#define BROADCAST_DELAY 1000 ///1000
+String stationinf = "";
 unsigned short stationid;
-unsigned short CRC16(unsigned short CRC, unsigned char Data) {
+unsigned short CRC16(unsigned short CRC, unsigned char Data)
+{
   Data ^= CRC & 255;
   Data ^= Data << 4;
   unsigned short t = (((unsigned short)Data << 8) | ((CRC >> 8) & 255));
@@ -115,38 +116,36 @@ unsigned short CRC16(unsigned short CRC, unsigned char Data) {
 byte mac[6];
 #define SERVERNAME "SERVER1"
 #define PASSWORD "TajMahal"
-String StringRmsRaw="";
+String StringRmsRaw = "";
 void PrintGeneralFirmwareInformation()
 {
-  StringRmsRaw=RMSRAW;
-    Serial.println("*******************");
-Serial.println(FIRMWAREVERSION);
-Serial.println(FILENAME);
-Serial.println("WILL CONNECT TO THE MASTER:");
+  StringRmsRaw = RMSRAW;
+  Serial.println("*******************");
+  Serial.println(FIRMWAREVERSION);
+  Serial.println(FILENAME);
+  Serial.println("WILL CONNECT TO THE MASTER:");
   Serial.println(SERVERNAME);
-   Serial.print("stationID= ");
+  Serial.print("stationID= ");
   Serial.println(stationid, DEC); //&0x0000ffffffff);
   Serial.print("espchipID=");
   Serial.print(ESP.getChipId());
-  RmsValueStringToFloat=StringRmsRaw.toFloat();
+  RmsValueStringToFloat = StringRmsRaw.toFloat();
   Serial.println("\nRMSCheck=");
-    Serial.println(RmsValueStringToFloat);
-   Serial.println("*******************");
+  Serial.println(RmsValueStringToFloat);
+  Serial.println("*******************");
 }
 void PrintIPformation()
 {
-   Serial.println("!-- Client Device Connected --!");
+  Serial.println("!-- Client Device Connected --!");
 
   // Printing IP Address --------------------------------------------------
   Serial.println("Connected To      : " + String(WiFi.SSID()));
   Serial.println("Signal Strenght   : " + String(WiFi.RSSI()) + " dBm");
-  Serial.print  ("Server IP Address : ");
+  Serial.print("Server IP Address : ");
   Serial.println(TKDServer);
-  Serial.print  ("Device IP Address : ");
+  Serial.print("Device IP Address : ");
   Serial.println(WiFi.localIP());
-
 }
-
 
 //void DisplayRed()
 //{
@@ -180,36 +179,36 @@ void DisplayBlue()
   digitalWrite(REDLED, HIGH);
   digitalWrite(GREENLED, HIGH);
   digitalWrite(BLUELED, LOW);
-
 }
 void DisplayGreen()
-{ digitalWrite(BLUELED, HIGH);
+{
+  digitalWrite(BLUELED, HIGH);
   digitalWrite(REDLED, HIGH);
   digitalWrite(GREENLED, LOW);
-
 }
 
-#define BLUELED D0            // Led in NodeMCU at pin GPIO16 (D0).
+#define BLUELED D0 // Led in NodeMCU at pin GPIO16 (D0).
 #define REDLED D1
 #define GREENLED D2
-void setupLeds() {
-  pinMode(BLUELED, OUTPUT);    // LED pin as output.
-  pinMode(REDLED, OUTPUT);    // LED pin as output.
-  pinMode(GREENLED, OUTPUT);    // LED pin as output.
+void setupLeds()
+{
+  pinMode(BLUELED, OUTPUT);  // LED pin as output.
+  pinMode(REDLED, OUTPUT);   // LED pin as output.
+  pinMode(GREENLED, OUTPUT); // LED pin as output.
 }
-void RgbTest() {
-//digitalWrite(LED, HIGH);// turn the LED off.(Note that LOW is the voltage level but actually 
-                        //the LED is on; this is because it is acive low on the ESP8266.
-//delay(1000);            // wait for 1 second.
-//digitalWrite(LED, LOW); // turn the LED on.
-DisplayRed();
-delay(300);
-DisplayGreen();
-delay(600);
-DisplayBlue();
-delay(900); // wait for 1 second.
+void RgbTest()
+{
+  //digitalWrite(LED, HIGH);// turn the LED off.(Note that LOW is the voltage level but actually
+  //the LED is on; this is because it is acive low on the ESP8266.
+  //delay(1000);            // wait for 1 second.
+  //digitalWrite(LED, LOW); // turn the LED on.
+  DisplayRed();
+  delay(300);
+  DisplayGreen();
+  delay(600);
+  DisplayBlue();
+  delay(900); // wait for 1 second.
 }
-
 
 void setup()
 {
@@ -225,134 +224,126 @@ void setup()
   //    Wire.setClock(TWI_FREQ);        // Setting The Frequency MPU9250 Require
 
   // Setting The Serial Port ----------------------------------------------
-  setupLeds() ;
-   for(int i=0;i<3;i++)
-  RgbTest();
-  Serial.begin(115200);           // Computer Communication
+  setupLeds();
+  for (int i = 0; i < 3; i++)
+    RgbTest();
+  Serial.begin(115200); // Computer Communication
 
   // Setting The Mode Of Pins ---------------------------------------------
   ///pinMode(LED0, OUTPUT);          // WIFI OnBoard LED Light
- /// pinMode(LED1, OUTPUT);          // Indicator For Client #1 Connectivity
- // pinMode(LED2, OUTPUT);          // Indicator For Client #2 Connectivity
+  /// pinMode(LED1, OUTPUT);          // Indicator For Client #1 Connectivity
+  // pinMode(LED2, OUTPUT);          // Indicator For Client #2 Connectivity
   ////pinMode(BUTTON, INPUT_PULLUP);  // Initiate Connectivity
-////  digitalWrite(LED0, !LOW);       // Turn WiFi LED Off
+  ////  digitalWrite(LED0, !LOW);       // Turn WiFi LED Off
 
-WiFi.macAddress(mac);
- stationid = 80;
+  WiFi.macAddress(mac);
+  stationid = 80;
   for (int i = 0; i < 6; i++)
     stationid = CRC16(stationid, mac[i]);
-   
+
   // Print Message Of I/O Setting Progress
-  
+
   ///StationInf = "$" + String(stationid) + "," + String( WiFi.macAddress()) + ",";
   // Print Message Of I/O Setting Progress --------------------------------
   Serial.println("\nI/O Pins Modes Set .... Done");
 
   // Starting To Connect --------------------------------------------------
-  WiFi.mode(WIFI_STA);            // To Avoid Broadcasting An SSID
-  WiFi.begin(SERVERNAME, PASSWORD);         // The SSID That We Want To Connect To
+  WiFi.mode(WIFI_STA);              // To Avoid Broadcasting An SSID
+  WiFi.begin(SERVERNAME, PASSWORD); // The SSID That We Want To Connect To
 
   // Printing Message For User That Connetion Is On Process ---------------
   Serial.println("!--- Connecting To " + WiFi.SSID() + " ---!");
- PrintGeneralFirmwareInformation();
+  PrintGeneralFirmwareInformation();
 
-  
   // WiFi Connectivity ----------------------------------------------------
- CheckConnectivity();            // Checking For Connection
-PrintIPformation();
+  CheckConnectivity(); // Checking For Connection
+  PrintIPformation();
   // Stop Blinking To Indicate Connected ----------------------------------
- /// digitalWrite(LED0, !HIGH);
-ReadESDStationData();
+  /// digitalWrite(LED0, !HIGH);
+  ReadESDStationData();
 
   // Conecting The Device As A Client -------------------------------------
   TKDRequest();
 }
 
-
 String WifiModuleID = ",Wifi1\n\r";
 char recieved;
-String  inData = "";
+String inData = "";
 void loop()
 {
   //delay(200);
   //ReadESDStationData();
-  senddata("BISMILLAH\n");///stationinf);//"BISMILLAH\n");
+  senddata("BISMILLAH\n"); ///stationinf);//"BISMILLAH\n");
 
-///ReadESDStationData();
-
+  ///ReadESDStationData();
 }
 
-
-
-
-void senddata(String datains) {
+void senddata(String datains)
+{
 
   ///TKDClient.println(datains);///"Client1Temp" + t );
-if(TKDClient.connected()){
-  TKDClient.flush();
-  if (TKDClient.available())
+  if (TKDClient.connected())
   {
-    // Here We Read The Message
-    ReadESDStationData();
-    String Message = TKDClient.readStringUntil('\n');//\r');
-    // Here We Print The Message On The Screen
-    Serial.println(Message);
-    /// if(Message=="_ESD_DATA")//<GETESD>")
-   /// ReadESDStationData();
-    TKDClient.println(stationinf);//datains);
     TKDClient.flush();
-    // Here We Reply To The Client With A Message
-    /// TKDClient.print(WifiID+"End\nWe Got Your Message");
-    //TKDClient.flush();
-  }//
+    if (TKDClient.available())
+    {
+      // Here We Read The Message
+      ReadESDStationData();
+      String Message = TKDClient.readStringUntil('\n'); //\r');
+      // Here We Print The Message On The Screen
+      Serial.println(Message);
+      /// if(Message=="_ESD_DATA")//<GETESD>")
+      /// ReadESDStationData();
+      TKDClient.println(stationinf); //datains);
+      TKDClient.flush();
+      // Here We Reply To The Client With A Message
+      /// TKDClient.print(WifiID+"End\nWe Got Your Message");
+      //TKDClient.flush();
+    } //
+  }
+  else
+  {
+    ESP.reset();
+    CheckConnectivity();
+  }
+  ///WiFi.mode(WIFI_STA);            // To Avoid Broadcasting An SSID
+  /// WiFi.begin(SERVERNAME, PASSWORD);
+  // else
+  // {
+  //  ESP.restart();
+  // /// CheckConnectivity();
+  //
+  // }
+  ///TKDRequest();
 }
-else
-{
-  ESP.reset();
-  CheckConnectivity();
-}
-///WiFi.mode(WIFI_STA);            // To Avoid Broadcasting An SSID
- /// WiFi.begin(SERVERNAME, PASSWORD); 
-// else
-// {
-//  ESP.restart(); 
-// /// CheckConnectivity();
-//
-// }
-    ///TKDRequest();
-}
-
 
 ///void (*state_table[])() = { DisplayBlue, DisplayRed, DisplayGreen};
 void CheckConnectivity()
 {
-  int i=0;
+  int i = 0;
   while (WiFi.status() != WL_CONNECTED)
   {
-    
-   switch(i)
+
+    switch (i)
     {
-      case 0 :
+    case 0:
       DisplayBlue();
       break;
-      case 1 :
+    case 1:
       DisplayRed();
       break;
-      case 2:
+    case 2:
       DisplayGreen();
-     
-      
+
       Serial.print(".");
     }
     delay(200);
     i++;
-    if(i>3)
-    i=0;
+    if (i > 3)
+      i = 0;
     Serial.println("");
   }
 }
-
-
 
 void TKDRequest()
 {
@@ -364,27 +355,25 @@ void TKDRequest()
   {
     //      Serial.println    ("<" + ButtonColor + "-CONNECTED>");
     //      TKDClient.println ("<" + ButtonColor + "-CONNECTED>");
-    Serial.println    ("Client Connected");
+    Serial.println("Client Connected");
     /// TKDClient.println ("Client Connected");
   }
 }
 
-
 ///////////////////////
-
 
 void DisplayOFF()
 {
   digitalWrite(GREENLED, LOW);
-   digitalWrite(BLUELED, LOW);
-    digitalWrite(REDLED, LOW);
+  digitalWrite(BLUELED, LOW);
+  digitalWrite(REDLED, LOW);
 }
 
-
-void RGBLEDsetup() {
-pinMode(BLUELED, OUTPUT);    // LED pin as output.
-pinMode(REDLED, OUTPUT);    // LED pin as output.
-pinMode(GREENLED, OUTPUT);    // LED pin as output.
+void RGBLEDsetup()
+{
+  pinMode(BLUELED, OUTPUT);  // LED pin as output.
+  pinMode(REDLED, OUTPUT);   // LED pin as output.
+  pinMode(GREENLED, OUTPUT); // LED pin as output.
 }
 //local start;
 long now;
@@ -394,49 +383,45 @@ long delta;
 void ReadButtonsExecuteLED()
 {
 
-
   //  buttonState = digitalRead(button); // put your main code here, to run repeatedly:
- if (digitalRead(BUTTON_BYPASSMODE) == 0)
+  if (digitalRead(BUTTON_BYPASSMODE) == 0)
   {
-    if (Stopmilisec==false)///Stopthecount == false)
-    { // fiveminutescounter++;
-      
-    now = millis()/1000;
-    Stopmilisec=true;
-    Serial.print("Starttime=");
-    Serial.println(now);
-    ReadSwitches = String(RESET_MODE);
+    if (Stopmilisec == false) ///Stopthecount == false)
+    {                         // fiveminutescounter++;
+
+      now = millis() / 1000;
+      Stopmilisec = true;
+      Serial.print("Starttime=");
+      Serial.println(now);
+      ReadSwitches = String(RESET_MODE);
     }
     else
     {
-        ReadSwitches = String(RESET_MODE);
- finished = millis()/1000;//-now)/1000;
- Serial.print("finished=");
-    Serial.println(finished);
-    
- delta=finished-now;
- Serial.print("Delta=");
-    Serial.println(delta);
- if(delta>=BYPASSMODETIMEOUT)
- 
+      ReadSwitches = String(RESET_MODE);
+      finished = millis() / 1000; //-now)/1000;
+      Serial.print("finished=");
+      Serial.println(finished);
+
+      delta = finished - now;
+      Serial.print("Delta=");
+      Serial.println(delta);
+      if (delta >= BYPASSMODETIMEOUT)
+
       {
-       ReadSwitches=String(MINT5_AFTER_RESET);
+        ReadSwitches = String(MINT5_AFTER_RESET);
       }
-    // else
-     
-      
+      // else
     }
     //  Serial.print("cOUNTER=");
     //// Serial.println(fiveminutescounter);
     /// Serial.println("RESET MODE");
-    
   }
 
-else
+  else
   {
-   
-    Stopmilisec=false;
-  
+
+    Stopmilisec = false;
+
     if (Rmsvalue < RmsValueStringToFloat)
     //0.3
     {
@@ -445,33 +430,29 @@ else
       ReadSwitches = String(ESD_BELT_PLUGGED);
     }
     else
-    { ReadSwitches = String(ESD_BELT_UN_PLUGGED);
+    {
+      ReadSwitches = String(ESD_BELT_UN_PLUGGED);
       /// digitalWrite(LED_ESD_NORMAL, HIGH);
       /// digitalWrite(LED_ESD_FAULTY, LOW);
     }
-
   }
   if (Rmsvalue < RmsValueStringToFloat)
   {
     DisplayRed();
-   //// digitalWrite(LED_ESD_NORMAL, LOW);
+    //// digitalWrite(LED_ESD_NORMAL, LOW);
     //Serial.println("esd normal led d7 low");
-  ////  digitalWrite(LED_ESD_FAULTY, HIGH);
+    ////  digitalWrite(LED_ESD_FAULTY, HIGH);
     //Serial.println("esd normal led d8 high");
   }
   else
   {
-DisplayGreen();
+    DisplayGreen();
 
-   // digitalWrite(LED_ESD_NORMAL, HIGH);
+    // digitalWrite(LED_ESD_NORMAL, HIGH);
     //Serial.println("esd normal led d7 high");
-   /// digitalWrite(LED_ESD_FAULTY, LOW);
+    /// digitalWrite(LED_ESD_FAULTY, LOW);
     //  Serial.println("esd normal led d8 low");
-
   }
-
- 
-
 }
 bool displaymode = true;
 void ReadESDStationData()
@@ -479,7 +460,8 @@ void ReadESDStationData()
 {
   // read the analog in value
   MaxSensorValue = 0;
-  for (int i = 0; i < NOOFSAMPLES; i++) {
+  for (int i = 0; i < NOOFSAMPLES; i++)
+  {
 
     //    if(i==0){
     //      Serial.print("vout=");
@@ -490,7 +472,6 @@ void ReadESDStationData()
 
     if (MaxSensorValue < sensorValue)
       MaxSensorValue = sensorValue;
-
   }
   sqaurevalues = 0;
 
@@ -498,7 +479,6 @@ void ReadESDStationData()
   {
 
     sqaurevalues += sensorValues[i] * sensorValues[i];
-
   }
   Rmsvalue = sqrt(sqaurevalues / NOOFSAMPLES);
 
@@ -508,10 +488,7 @@ void ReadESDStationData()
   //Serial.print(MaxSensorValue);//*calibs/1024);
   //Serial.print(" \t "); Serial.println(Rmsvalue);//*calibs/1024);
 
-
   ReadButtonsExecuteLED();
-
-
 
   if (ReadSwitches == String(MINT5_AFTER_RESET))
   {
@@ -522,55 +499,48 @@ void ReadESDStationData()
       Serial.println("blue");
     }
     else
-    { Serial.println("red ");
+    {
+      Serial.println("red ");
       DisplayRed();
       displaymode = true;
     }
 
     /// delay(1);
-
   }
-  else if (ReadSwitches ==  String(RESET_MODE))
+  else if (ReadSwitches == String(RESET_MODE))
   {
     Serial.println("bLUE ENABLED");
     DisplayBlue();
 
     //delay(10);
-  } else if (ReadSwitches == String(ESD_BELT_UN_PLUGGED))
+  }
+  else if (ReadSwitches == String(ESD_BELT_UN_PLUGGED))
   {
     DisplayRed();
-   /// Serial.println("RED ENABLED");
+    /// Serial.println("RED ENABLED");
     //delay(10);
-
-
-
   }
   else if (ReadSwitches == String(ESD_BELT_PLUGGED))
   {
     DisplayGreen();
     Serial.println("green ENABLED");
     //delay(10);
-
-
-
   }
 
-  stationinf = "$" + String(stationid) + "," + String( WiFi.macAddress()) + "," + String(ReadSwitches) + "," + String(MaxSensorValue) + "," + String(Rmsvalue)+'\n'; //+"@";
+  stationinf = "$" + String(stationid) + "," + String(WiFi.macAddress()) + "," + String(ReadSwitches) + "," + String(MaxSensorValue) + "," + String(Rmsvalue) + '\n'; //+"@";
 
   ///Serial.println(stationinf);
   ReadSwitches = "";
 
-
-
-
-
   ///delay(BROADCAST_DELAY);//1000);
 }
 
-From: AbdulRahim Ansari 
-Sent: Thursday, February 27, 2020 2:24 PM
-To: AbdulRahim Ansari
-Subject: RE: "cLIENTS NODE MCU
+From : AbdulRahim Ansari
+           Sent : Thursday,
+                  February 27,
+                  2020 2 : 24 PM
+                      To : AbdulRahim Ansari
+                               Subject : RE : "cLIENTS NODE MCU
 
 #include <ESP8266WiFi.h>
 
@@ -586,40 +556,40 @@ Subject: RE: "cLIENTS NODE MCU
 //------------------------------------------------------------------------------------
 // Defining I/O Pins
 //------------------------------------------------------------------------------------
-#define       LED0      2         // WIFI Module LED
-#define       LED1      D0        // Connectivity With Client #1
-#define       LED2      D2        // Connectivity With Client #2
-#define       BUTTON    D1        // Connectivity ReInitiate Button
-#define       TWI_FREQ  400000L   // I2C Frequency Setting To 400KHZ
+#define LED0 2           // WIFI Module LED
+#define LED1 D0          // Connectivity With Client #1
+#define LED2 D2          // Connectivity With Client #2
+#define BUTTON D1        // Connectivity ReInitiate Button
+#define TWI_FREQ 400000L // I2C Frequency Setting To 400KHZ
 #define DHTPIN D7
 
-#define DHTTYPE DHT11   // DHT 11
-///DHT dht(DHTPIN, DHTTYPE);
-//------------------------------------------------------------------------------------
-// BUTTON Variables
-//------------------------------------------------------------------------------------
-int           ButtonState;
-int           LastButtonState   = LOW;
-int           LastDebounceTime  = 0;
-int           DebounceDelay     = 50;
-const String  ButtonColor       = "BLU";
-float temperature ;
-float humidity ;
+#define DHTTYPE DHT11 // DHT 11                                                            \
+    ///DHT dht(DHTPIN, DHTTYPE);                                                           \
+    //------------------------------------------------------------------------------------ \
+    // BUTTON Variables                                                                    \
+    //------------------------------------------------------------------------------------
+                                              int ButtonState;
+int LastButtonState = LOW;
+int LastDebounceTime = 0;
+int DebounceDelay = 50;
+const String ButtonColor = "BLU";
+float temperature;
+float humidity;
 String t, h;
 //------------------------------------------------------------------------------------
 // LED Delay Variables
 //------------------------------------------------------------------------------------
-int           LEDState          = LOW;
-unsigned long CurrMillis        = 0;
-unsigned long PrevMillis        = 0;
-unsigned long Interval          = 1000;
+int LEDState = LOW;
+unsigned long CurrMillis = 0;
+unsigned long PrevMillis = 0;
+unsigned long Interval = 1000;
 //------------------------------------------------------------------------------------
 // Authentication Variables
 //------------------------------------------------------------------------------------
-char*         TKDssid;
-char*         TKDpassword;
-IPAddress     TKDServer(192, 168, 4, 1);
-WiFiClient    TKDClient;
+char *TKDssid;
+char *TKDpassword;
+IPAddress TKDServer(192, 168, 4, 1);
+WiFiClient TKDClient;
 
 #define NOOFSAMPLES 100
 #define VS 5000UL
@@ -636,8 +606,8 @@ int StaionStatus = 0;
 #define LUNCH_MODE 6
 ///#define LED_BLUE D6
 
-#define BLUELED D0            // Led in NodeMCU at pin GPIO16 (D0).
-#define LED_BLUE BLUELED  ///D6
+#define BLUELED D0       // Led in NodeMCU at pin GPIO16 (D0).
+#define LED_BLUE BLUELED ///D6
 #define REDLED D1
 #define GREENLED D2
 #define BUTTON_BYPASSMODE D3
@@ -645,14 +615,14 @@ int StaionStatus = 0;
 #define BUTTON_LUNCHMODE D6
 #define BUTTON_RESET_5MINT D5
 #define LED_ESD_RESETMODE BLUELED //D6
- 
+
 #define LED_ESD_NORMAL GREENLED ///D7
-#define LED_ESD_FAULTY REDLED ///D8
+#define LED_ESD_FAULTY REDLED   ///D8
 double calibs = 5.0;
-const int analogInPin = A0;  // ESP8266 Analog Pin ADC0 = A0
+const int analogInPin = A0; // ESP8266 Analog Pin ADC0 = A0
 
 ///int sensorValue = 0;  // value read from the pot
-int outputValue = 0;  // value to output to a PWM pin
+int outputValue = 0; // value to output to a PWM pin
 
 String ReadSwitches = "";
 double sensorValues[NOOFSAMPLES];
@@ -667,12 +637,13 @@ int fiveminutescounter = 0;
 
 #define RESET_TIMEOUT 400
 bool Stopthecount = false;
-bool Stopmilisec=false;
+bool Stopmilisec = false;
 
-#define BROADCAST_DELAY 1000  ///1000
- String stationinf = "";
+#define BROADCAST_DELAY 1000 ///1000
+String stationinf = "";
 unsigned short stationid;
-unsigned short CRC16(unsigned short CRC, unsigned char Data) {
+unsigned short CRC16(unsigned short CRC, unsigned char Data)
+{
   Data ^= CRC & 255;
   Data ^= Data << 4;
   unsigned short t = (((unsigned short)Data << 8) | ((CRC >> 8) & 255));
@@ -685,31 +656,29 @@ byte mac[6];
 #define PASSWORD "TajMahal"
 void PrintGeneralFirmwareInformation()
 {
-    Serial.println("*******************");
-Serial.println(FIRMWAREVERSION);
-Serial.println(FILENAME);
-Serial.println("WILL CONNECT TO THE MASTER:");
+  Serial.println("*******************");
+  Serial.println(FIRMWAREVERSION);
+  Serial.println(FILENAME);
+  Serial.println("WILL CONNECT TO THE MASTER:");
   Serial.println(SERVERNAME);
-   Serial.print("stationID= ");
+  Serial.print("stationID= ");
   Serial.println(stationid, DEC); //&0x0000ffffffff);
   Serial.print("espchipID=");
   Serial.print(ESP.getChipId());
-   Serial.println("*******************");
+  Serial.println("*******************");
 }
 void PrintIPformation()
 {
-   Serial.println("!-- Client Device Connected --!");
+  Serial.println("!-- Client Device Connected --!");
 
   // Printing IP Address --------------------------------------------------
   Serial.println("Connected To      : " + String(WiFi.SSID()));
   Serial.println("Signal Strenght   : " + String(WiFi.RSSI()) + " dBm");
-  Serial.print  ("Server IP Address : ");
+  Serial.print("Server IP Address : ");
   Serial.println(TKDServer);
-  Serial.print  ("Device IP Address : ");
+  Serial.print("Device IP Address : ");
   Serial.println(WiFi.localIP());
-
 }
-
 
 //void DisplayRed()
 //{
@@ -743,36 +712,36 @@ void DisplayBlue()
   digitalWrite(REDLED, HIGH);
   digitalWrite(GREENLED, HIGH);
   digitalWrite(BLUELED, LOW);
-
 }
 void DisplayGreen()
-{ digitalWrite(BLUELED, HIGH);
+{
+  digitalWrite(BLUELED, HIGH);
   digitalWrite(REDLED, HIGH);
   digitalWrite(GREENLED, LOW);
-
 }
 
-#define BLUELED D0            // Led in NodeMCU at pin GPIO16 (D0).
+#define BLUELED D0 // Led in NodeMCU at pin GPIO16 (D0).
 #define REDLED D1
 #define GREENLED D2
-void setupLeds() {
-  pinMode(BLUELED, OUTPUT);    // LED pin as output.
-  pinMode(REDLED, OUTPUT);    // LED pin as output.
-  pinMode(GREENLED, OUTPUT);    // LED pin as output.
+void setupLeds()
+{
+  pinMode(BLUELED, OUTPUT);  // LED pin as output.
+  pinMode(REDLED, OUTPUT);   // LED pin as output.
+  pinMode(GREENLED, OUTPUT); // LED pin as output.
 }
-void RgbTest() {
-//digitalWrite(LED, HIGH);// turn the LED off.(Note that LOW is the voltage level but actually 
-                        //the LED is on; this is because it is acive low on the ESP8266.
-//delay(1000);            // wait for 1 second.
-//digitalWrite(LED, LOW); // turn the LED on.
-DisplayRed();
-delay(300);
-DisplayGreen();
-delay(600);
-DisplayBlue();
-delay(900); // wait for 1 second.
+void RgbTest()
+{
+  //digitalWrite(LED, HIGH);// turn the LED off.(Note that LOW is the voltage level but actually
+  //the LED is on; this is because it is acive low on the ESP8266.
+  //delay(1000);            // wait for 1 second.
+  //digitalWrite(LED, LOW); // turn the LED on.
+  DisplayRed();
+  delay(300);
+  DisplayGreen();
+  delay(600);
+  DisplayBlue();
+  delay(900); // wait for 1 second.
 }
-
 
 void setup()
 {
@@ -788,133 +757,123 @@ void setup()
   //    Wire.setClock(TWI_FREQ);        // Setting The Frequency MPU9250 Require
 
   // Setting The Serial Port ----------------------------------------------
-  setupLeds() ;
-   for(int i=0;i<3;i++)
-  RgbTest();
-  Serial.begin(115200);           // Computer Communication
+  setupLeds();
+  for (int i = 0; i < 3; i++)
+    RgbTest();
+  Serial.begin(115200); // Computer Communication
 
   // Setting The Mode Of Pins ---------------------------------------------
   ///pinMode(LED0, OUTPUT);          // WIFI OnBoard LED Light
- /// pinMode(LED1, OUTPUT);          // Indicator For Client #1 Connectivity
- // pinMode(LED2, OUTPUT);          // Indicator For Client #2 Connectivity
+  /// pinMode(LED1, OUTPUT);          // Indicator For Client #1 Connectivity
+  // pinMode(LED2, OUTPUT);          // Indicator For Client #2 Connectivity
   ////pinMode(BUTTON, INPUT_PULLUP);  // Initiate Connectivity
-////  digitalWrite(LED0, !LOW);       // Turn WiFi LED Off
+  ////  digitalWrite(LED0, !LOW);       // Turn WiFi LED Off
 
-WiFi.macAddress(mac);
- stationid = 80;
+  WiFi.macAddress(mac);
+  stationid = 80;
   for (int i = 0; i < 6; i++)
     stationid = CRC16(stationid, mac[i]);
-   
+
   // Print Message Of I/O Setting Progress
-  
+
   ///StationInf = "$" + String(stationid) + "," + String( WiFi.macAddress()) + ",";
   // Print Message Of I/O Setting Progress --------------------------------
   Serial.println("\nI/O Pins Modes Set .... Done");
 
   // Starting To Connect --------------------------------------------------
-  WiFi.mode(WIFI_STA);            // To Avoid Broadcasting An SSID
-  WiFi.begin(SERVERNAME, PASSWORD);         // The SSID That We Want To Connect To
+  WiFi.mode(WIFI_STA);              // To Avoid Broadcasting An SSID
+  WiFi.begin(SERVERNAME, PASSWORD); // The SSID That We Want To Connect To
 
   // Printing Message For User That Connetion Is On Process ---------------
   Serial.println("!--- Connecting To " + WiFi.SSID() + " ---!");
- PrintGeneralFirmwareInformation();
+  PrintGeneralFirmwareInformation();
 
-  
   // WiFi Connectivity ----------------------------------------------------
- CheckConnectivity();            // Checking For Connection
-PrintIPformation();
+  CheckConnectivity(); // Checking For Connection
+  PrintIPformation();
   // Stop Blinking To Indicate Connected ----------------------------------
- /// digitalWrite(LED0, !HIGH);
- ReadESDStationData();
+  /// digitalWrite(LED0, !HIGH);
+  ReadESDStationData();
 
   // Conecting The Device As A Client -------------------------------------
   TKDRequest();
 }
 
-
 String WifiModuleID = ",Wifi1\n\r";
 char recieved;
-String  inData = "";
+String inData = "";
 void loop()
 {
   //delay(200);
   //ReadESDStationData();
-  senddata("BISMILLAH\n");///stationinf);//"BISMILLAH\n");
-
-
-
+  senddata("BISMILLAH\n"); ///stationinf);//"BISMILLAH\n");
 }
 
-
-
-
-void senddata(String datains) {
+void senddata(String datains)
+{
 
   ///TKDClient.println(datains);///"Client1Temp" + t );
-if(TKDClient.connected()){
-  TKDClient.flush();
-  if (TKDClient.available())
+  if (TKDClient.connected())
   {
-    // Here We Read The Message
-    String Message = TKDClient.readStringUntil('\n');//\r');
-    // Here We Print The Message On The Screen
-    Serial.println(Message);
-    /// if(Message=="_ESD_DATA")//<GETESD>")
-    ReadESDStationData();
-    TKDClient.println(stationinf);//datains);
     TKDClient.flush();
-    // Here We Reply To The Client With A Message
-    /// TKDClient.print(WifiID+"End\nWe Got Your Message");
-    //TKDClient.flush();
-  }//
+    if (TKDClient.available())
+    {
+      // Here We Read The Message
+      String Message = TKDClient.readStringUntil('\n'); //\r');
+      // Here We Print The Message On The Screen
+      Serial.println(Message);
+      /// if(Message=="_ESD_DATA")//<GETESD>")
+      ReadESDStationData();
+      TKDClient.println(stationinf); //datains);
+      TKDClient.flush();
+      // Here We Reply To The Client With A Message
+      /// TKDClient.print(WifiID+"End\nWe Got Your Message");
+      //TKDClient.flush();
+    } //
+  }
+  else
+  {
+    ESP.reset();
+    CheckConnectivity();
+  }
+  ///WiFi.mode(WIFI_STA);            // To Avoid Broadcasting An SSID
+  /// WiFi.begin(SERVERNAME, PASSWORD);
+  // else
+  // {
+  //  ESP.restart();
+  // /// CheckConnectivity();
+  //
+  // }
+  ///TKDRequest();
 }
-else
-{
-  ESP.reset();
-  CheckConnectivity();
-}
-///WiFi.mode(WIFI_STA);            // To Avoid Broadcasting An SSID
- /// WiFi.begin(SERVERNAME, PASSWORD); 
-// else
-// {
-//  ESP.restart(); 
-// /// CheckConnectivity();
-//
-// }
-    ///TKDRequest();
-}
-
 
 ///void (*state_table[])() = { DisplayBlue, DisplayRed, DisplayGreen};
 void CheckConnectivity()
 {
-  int i=0;
+  int i = 0;
   while (WiFi.status() != WL_CONNECTED)
   {
-    
-   switch(i)
+
+    switch (i)
     {
-      case 0 :
+    case 0:
       DisplayBlue();
       break;
-      case 1 :
+    case 1:
       DisplayRed();
       break;
-      case 2:
+    case 2:
       DisplayGreen();
-     
-      
+
       Serial.print(".");
     }
     delay(200);
     i++;
-    if(i>3)
-    i=0;
+    if (i > 3)
+      i = 0;
     Serial.println("");
   }
 }
-
-
 
 void TKDRequest()
 {
@@ -926,27 +885,25 @@ void TKDRequest()
   {
     //      Serial.println    ("<" + ButtonColor + "-CONNECTED>");
     //      TKDClient.println ("<" + ButtonColor + "-CONNECTED>");
-    Serial.println    ("Client Connected");
+    Serial.println("Client Connected");
     /// TKDClient.println ("Client Connected");
   }
 }
 
-
 ///////////////////////
-
 
 void DisplayOFF()
 {
   digitalWrite(GREENLED, LOW);
-   digitalWrite(BLUELED, LOW);
-    digitalWrite(REDLED, LOW);
+  digitalWrite(BLUELED, LOW);
+  digitalWrite(REDLED, LOW);
 }
 
-
-void RGBLEDsetup() {
-pinMode(BLUELED, OUTPUT);    // LED pin as output.
-pinMode(REDLED, OUTPUT);    // LED pin as output.
-pinMode(GREENLED, OUTPUT);    // LED pin as output.
+void RGBLEDsetup()
+{
+  pinMode(BLUELED, OUTPUT);  // LED pin as output.
+  pinMode(REDLED, OUTPUT);   // LED pin as output.
+  pinMode(GREENLED, OUTPUT); // LED pin as output.
 }
 //local start;
 long now;
@@ -956,49 +913,45 @@ long delta;
 void ReadButtonsExecuteLED()
 {
 
-
   //  buttonState = digitalRead(button); // put your main code here, to run repeatedly:
- if (digitalRead(BUTTON_BYPASSMODE) == 0)
+  if (digitalRead(BUTTON_BYPASSMODE) == 0)
   {
-    if (Stopmilisec==false)///Stopthecount == false)
-    { // fiveminutescounter++;
-      
-    now = millis()/1000;
-    Stopmilisec=true;
-    Serial.print("Starttime=");
-    Serial.println(now);
-    ReadSwitches = String(RESET_MODE);
+    if (Stopmilisec == false) ///Stopthecount == false)
+    {                         // fiveminutescounter++;
+
+      now = millis() / 1000;
+      Stopmilisec = true;
+      Serial.print("Starttime=");
+      Serial.println(now);
+      ReadSwitches = String(RESET_MODE);
     }
     else
     {
-        ReadSwitches = String(RESET_MODE);
- finished = millis()/1000;//-now)/1000;
- Serial.print("finished=");
-    Serial.println(finished);
-    
- delta=finished-now;
- Serial.print("Delta=");
-    Serial.println(delta);
- if(delta>=BYPASSMODETIMEOUT)
- 
+      ReadSwitches = String(RESET_MODE);
+      finished = millis() / 1000; //-now)/1000;
+      Serial.print("finished=");
+      Serial.println(finished);
+
+      delta = finished - now;
+      Serial.print("Delta=");
+      Serial.println(delta);
+      if (delta >= BYPASSMODETIMEOUT)
+
       {
-       ReadSwitches=String(MINT5_AFTER_RESET);
+        ReadSwitches = String(MINT5_AFTER_RESET);
       }
-    // else
-     
-      
+      // else
     }
     //  Serial.print("cOUNTER=");
     //// Serial.println(fiveminutescounter);
     /// Serial.println("RESET MODE");
-    
   }
 
-else
+  else
   {
-   
-    Stopmilisec=false;
-  
+
+    Stopmilisec = false;
+
     if (Rmsvalue < 0.3)
     {
       ///digitalWrite(LED_ESD_NORMAL, LOW);
@@ -1006,33 +959,29 @@ else
       ReadSwitches = String(ESD_BELT_PLUGGED);
     }
     else
-    { ReadSwitches = String(ESD_BELT_UN_PLUGGED);
+    {
+      ReadSwitches = String(ESD_BELT_UN_PLUGGED);
       /// digitalWrite(LED_ESD_NORMAL, HIGH);
       /// digitalWrite(LED_ESD_FAULTY, LOW);
     }
-
   }
   if (Rmsvalue < 0.3)
   {
     DisplayRed();
-   //// digitalWrite(LED_ESD_NORMAL, LOW);
+    //// digitalWrite(LED_ESD_NORMAL, LOW);
     //Serial.println("esd normal led d7 low");
-  ////  digitalWrite(LED_ESD_FAULTY, HIGH);
+    ////  digitalWrite(LED_ESD_FAULTY, HIGH);
     //Serial.println("esd normal led d8 high");
   }
   else
   {
-DisplayGreen();
+    DisplayGreen();
 
-   // digitalWrite(LED_ESD_NORMAL, HIGH);
+    // digitalWrite(LED_ESD_NORMAL, HIGH);
     //Serial.println("esd normal led d7 high");
-   /// digitalWrite(LED_ESD_FAULTY, LOW);
+    /// digitalWrite(LED_ESD_FAULTY, LOW);
     //  Serial.println("esd normal led d8 low");
-
   }
-
- 
-
 }
 bool displaymode = true;
 void ReadESDStationData()
@@ -1040,7 +989,8 @@ void ReadESDStationData()
 {
   // read the analog in value
   MaxSensorValue = 0;
-  for (int i = 0; i < NOOFSAMPLES; i++) {
+  for (int i = 0; i < NOOFSAMPLES; i++)
+  {
 
     //    if(i==0){
     //      Serial.print("vout=");
@@ -1051,7 +1001,6 @@ void ReadESDStationData()
 
     if (MaxSensorValue < sensorValue)
       MaxSensorValue = sensorValue;
-
   }
   sqaurevalues = 0;
 
@@ -1059,7 +1008,6 @@ void ReadESDStationData()
   {
 
     sqaurevalues += sensorValues[i] * sensorValues[i];
-
   }
   Rmsvalue = sqrt(sqaurevalues / NOOFSAMPLES);
 
@@ -1069,10 +1017,7 @@ void ReadESDStationData()
   //Serial.print(MaxSensorValue);//*calibs/1024);
   //Serial.print(" \t "); Serial.println(Rmsvalue);//*calibs/1024);
 
-
   ReadButtonsExecuteLED();
-
-
 
   if (ReadSwitches == String(MINT5_AFTER_RESET))
   {
@@ -1083,85 +1028,79 @@ void ReadESDStationData()
       Serial.println("blue");
     }
     else
-    { Serial.println("red ");
+    {
+      Serial.println("red ");
       DisplayRed();
       displaymode = true;
     }
 
     /// delay(1);
-
   }
-  else if (ReadSwitches ==  String(RESET_MODE))
+  else if (ReadSwitches == String(RESET_MODE))
   {
     Serial.println("bLUE ENABLED");
     DisplayBlue();
 
     //delay(10);
-  } else if (ReadSwitches == String(ESD_BELT_UN_PLUGGED))
+  }
+  else if (ReadSwitches == String(ESD_BELT_UN_PLUGGED))
   {
     DisplayRed();
-   /// Serial.println("RED ENABLED");
+    /// Serial.println("RED ENABLED");
     //delay(10);
-
-
-
   }
   else if (ReadSwitches == String(ESD_BELT_PLUGGED))
   {
     DisplayGreen();
     Serial.println("green ENABLED");
     //delay(10);
-
-
-
   }
 
-  stationinf = "$" + String(stationid) + "," + String( WiFi.macAddress()) + "," + String(ReadSwitches) + "," + String(MaxSensorValue) + "," + String(Rmsvalue)+'\n'; //+"@";
+  stationinf = "$" + String(stationid) + "," + String(WiFi.macAddress()) + "," + String(ReadSwitches) + "," + String(MaxSensorValue) + "," + String(Rmsvalue) + '\n'; //+"@";
 
   ///Serial.println(stationinf);
   ReadSwitches = "";
 
-
-
-
-
   ///delay(BROADCAST_DELAY);//1000);
 }
 
-From: AbdulRahim Ansari 
-Sent: Thursday, February 27, 2020 1:52 PM
-To: AbdulRahim Ansari
-Subject: "ESP8266SERVERTO4CLIENTS"
+From : AbdulRahim Ansari
+           Sent : Thursday,
+                  February 27,
+                  2020 1 : 52 PM
+                      To : AbdulRahim Ansari
+                               Subject : "ESP8266SERVERTO4CLIENTS"
 
 //-- Libraries Included --------------------------------------------------------------
 #include <ESP8266WiFi.h>
 
-///master for 4 Clients 
+///master for 4 Clients
 #define FIRMWAREVERSION "VER1.00 REV1.00"
 #define FILENAME "ESP8266SERVERTO4CLIENTS"
 //271219 WAS CHA
 //------------------------------------------------------------------------------------
 // Define I/O Pins
-#define     LED0      D2           // WIFI Module LED
-#define     LED1      D0          // Connectivity With Client #1
-#define     LED2      D2          // Connectivity With Client #2
-#define     BUTTON    D1          // Connectivity ReInitiate Button
+#define LED0 D2                                         // WIFI Module LED
+#define LED1 D0                                         // Connectivity With Client #1
+#define LED2 D2                                         // Connectivity With Client #2
+#define BUTTON D1                                       // Connectivity ReInitiate Button                                                      \
+                                                        //------------------------------------------------------------------------------------ \
+                                                        // Authentication Variables
+                                         char *TKDssid; // SERVER WIFI NAME
+char *TKDpassword;                                      // SERVER PASSWORD
 //------------------------------------------------------------------------------------
-// Authentication Variables
-char*       TKDssid;              // SERVER WIFI NAME
-char*       TKDpassword;          // SERVER PASSWORD
-//------------------------------------------------------------------------------------
-#define     MAXSC     4           // MAXIMUM NUMBER OF CLIENTS
-WiFiServer  TKDServer(9001);      // THE SERVER AND THE PORT NUMBER
-WiFiClient  TKDClient[MAXSC];     // THE SERVER CLIENTS
+#define MAXSC 4              // MAXIMUM NUMBER OF CLIENTS
+WiFiServer TKDServer(9001);  // THE SERVER AND THE PORT NUMBER
+WiFiClient TKDClient[MAXSC]; // THE SERVER CLIENTS
 
 #define MCUID "SERVER1"
 //ESD_ACCESSPOINT"
 #define MCUIDPASS "TajMahal"
 String Serverinf;
-unsigned short  serverid;
+unsigned short serverid;
 byte mac[6];
-unsigned short CRC16(unsigned short CRC, unsigned char Data) {
+unsigned short CRC16(unsigned short CRC, unsigned char Data)
+{
   Data ^= CRC & 255;
   Data ^= Data << 4;
   unsigned short t = (((unsigned short)Data << 8) | ((CRC >> 8) & 255));
@@ -1175,7 +1114,7 @@ unsigned short CRC16(unsigned short CRC, unsigned char Data) {
 //#define BUTTON_LUNCHMODE D3 //D6
 
 String SerialMessage;
-String  ServerInf = "";
+String ServerInf = "";
 //#define BLUELED D1        //IT WAS D0    // Led in NodeMCU at pin GPIO16 (D0).
 ///#define REDLED D1
 ///#define GREENLED D2
@@ -1192,22 +1131,20 @@ int eeAddress = 0;
 void DisplayRed()
 {
   ///digitalWrite(GREENLED, HIGH);
- /// digitalWrite(BLUELED, HIGH);
+  /// digitalWrite(BLUELED, HIGH);
   //digitalWrite(REDLED, LOW);
 }
 
 void DisplayBlue()
 {
   //digitalWrite(REDLED, HIGH);
-///  digitalWrite(GREENLED, HIGH);
- /// digitalWrite(BLUELED, LOW);
-
+  ///  digitalWrite(GREENLED, HIGH);
+  /// digitalWrite(BLUELED, LOW);
 }
 void DisplayGreen()
-{/// digitalWrite(BLUELED, HIGH);
-///  digitalWrite(REDLED, HIGH);
-///  digitalWrite(GREENLED, LOW);
-
+{ /// digitalWrite(BLUELED, HIGH);
+  ///  digitalWrite(REDLED, HIGH);
+  ///  digitalWrite(GREENLED, LOW);
 }
 /*
    common cathode
@@ -1224,36 +1161,21 @@ void DisplayGreen()
   digitalWrite(GREENLED, HIGH);
 
   }*/
-void setupLeds() {
- /// pinMode(BLUELED, OUTPUT);    // LED pin as output.
-///  pinMode(REDLED, OUTPUT);    // LED pin as output.
-///  pinMode(GREENLED, OUTPUT);    // L///ED pin as output.
+void setupLeds()
+{
+  /// pinMode(BLUELED, OUTPUT);    // LED pin as output.
+  ///  pinMode(REDLED, OUTPUT);    // LED pin as output.
+  ///  pinMode(GREENLED, OUTPUT);    // L///ED pin as output.
 }
 String Serverstatus;
-void  UpdateLunchStatus()
-{
- // if (digitalRead(BUTTON_LUNCHMODE) == 0)
-  //{
 
-//    Serverstatus = STANDBYMODE;
-//    // Serial.println( Serverinf);//"pressed");
-//    DisplayRed();
-//  }
-//  else {
-//    DisplayGreen();
-//    Serverstatus = NORMALMODE;
-//    // Serial.println( Serverinf);
-//  }
-}
 void SetupButton()
 {
- /// pinMode(BUTTON_LUNCHMODE, INPUT);
+  /// pinMode(BUTTON_LUNCHMODE, INPUT);
 }
 
-
 #define DEVICE_STATUS_ADDRESS 0
-void SetWifi(char* Name, char* Password);
-
+void SetWifi(char *Name, char *Password);
 
 void PrintGeneralFirmwareInformation()
 {
@@ -1269,8 +1191,8 @@ void PrintGeneralFirmwareInformation()
   Serial.println("*******************");
 }
 
-
-void RgbTest() {
+void RgbTest()
+{
   //digitalWrite(LED, HIGH);// turn the LED off.(Note that LOW is the voltage level but actually
   //the LED is on; this is because it is acive low on the ESP8266.
   //delay(1000);            // wait for 1 second.
@@ -1285,7 +1207,7 @@ void RgbTest() {
 void setup()
 {
 
-  Serial.begin(9600);           // Computer Communication
+  Serial.begin(9600); // Computer Communication
 
   setupLeds();
   SetupButton();
@@ -1300,46 +1222,36 @@ void setup()
   for (int i = 0; i < 6; i++)
     serverid = CRC16(serverid, mac[i]);
   PrintGeneralFirmwareInformation();
-  ServerInf = "#" + String(serverid) + "," + String( WiFi.macAddress()) + ",";
+  ServerInf = "#" + String(serverid) + "," + String(WiFi.macAddress()) + ",";
   for (int i = 0; i < 5; i++)
     RgbTest();
-
 }
-
 
 void IsClients2();
 
 void SerialPoll()
 {
   {
-    if (Serial.available() > 0) {
+    if (Serial.available() > 0)
+    {
       SerialMessage = Serial.readStringUntil('\n');
       ///  Serial.println("actual="+SerialMessage);
       if (SerialMessage == "GET_ESD_DATA")
       {
-      /// ;// Serial.print(ServerInf + Serverstatus);//commented to not give server information 21022020
+        /// ;// Serial.print(ServerInf + Serverstatus);//commented to not give server information 21022020
         IsClients2();
       }
-
-
     }
   }
-
-
 }
-
-
-
 
 void loop()
 {
   UpdateLunchStatus();
   SerialPoll();
-
 }
 
-
-void SetWifi(char* Name, char* Password)
+void SetWifi(char *Name, char *Password)
 {
   // Stop Any Previous WIFI
   WiFi.disconnect();
@@ -1349,8 +1261,8 @@ void SetWifi(char* Name, char* Password)
   Serial.println("WIFI Mode : AccessPoint Station");
 
   // Setting The Access Point
-  TKDssid      = Name;
-  TKDpassword  = Password;
+  TKDssid = Name;
+  TKDpassword = Password;
 
   // Starting The Access Point
   WiFi.softAP(TKDssid, TKDpassword);
@@ -1371,8 +1283,6 @@ void SetWifi(char* Name, char* Password)
   Serial.println("Server Started");
 }
 
-
-
 String GetEsd = "<GET_ESD>" + '\r';
 void IsClients2()
 {
@@ -1383,7 +1293,8 @@ void IsClients2()
       //find free/disconnected spot
       if (!TKDClient[i] || !TKDClient[i].connected())
       {
-        if (TKDClient[i]) TKDClient[i].stop();
+        if (TKDClient[i])
+          TKDClient[i].stop();
         TKDClient[i] = TKDServer.available();
 
         //// Serial.print("New Client : "); Serial.print(String(i+1) + " - ");
@@ -1401,7 +1312,8 @@ void IsClients2()
   for (int i = 0; i < MAXSC; i++)
   {
     if (TKDClient[i] && TKDClient[i].connected())
-    { TKDClient[i].println(GetEsd);///"<GETESD>");
+    {
+      TKDClient[i].println(GetEsd); ///"<GETESD>");
       if (TKDClient[i].available())
       {
         // If Any Data Was Available We Read IT
@@ -1417,6 +1329,3 @@ void IsClients2()
     }
   }
 }
-
-
-
